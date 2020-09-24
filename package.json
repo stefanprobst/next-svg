@@ -25,12 +25,13 @@
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
     "@stefanprobst/commitlint-config": "^1.0.0",
-    "@stefanprobst/eslint-config-node": "^1.0.2",
+    "@stefanprobst/eslint-config-node": "^1.0.3",
     "@stefanprobst/prettier-config": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^4.2.0",
     "@typescript-eslint/parser": "^4.2.0",
     "eslint": "^7.9.0",
     "eslint-config-prettier": "^6.11.0",
+    "eslint-import-resolver-typescript": "^2.3.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jest": "^24.0.1",
     "eslint-plugin-node": "^11.1.0",
@@ -59,18 +60,6 @@
   "eslintConfig": {
     "extends": [
       "@stefanprobst/eslint-config-node"
-    ],
-    "overrides": [
-      {
-        "files": [
-          "*.ts"
-        ],
-        "parser": "@typescript-eslint/parser",
-        "extends": "plugin:@typescript-eslint/recommended",
-        "rules": {
-          "node/no-unsupported-features/es-syntax": "off"
-        }
-      }
     ]
   },
   "husky": {
