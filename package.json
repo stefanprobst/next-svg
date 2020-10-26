@@ -1,6 +1,6 @@
 {
   "name": "@stefanprobst/next-svg",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "repository": "git@github.com:stefanprobst/next-svg.git",
@@ -46,7 +46,7 @@
   },
   "peerDependencies": {
     "next": "^9.5.0",
-    "react": "^16.10.0"
+    "react": "^16.10.0||^17.0.0"
   },
   "engines": {
     "node": ">=12.9",
