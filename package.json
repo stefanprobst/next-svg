@@ -1,6 +1,6 @@
 {
   "name": "@stefanprobst/next-svg",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "repository": "git@github.com:stefanprobst/next-svg.git",
@@ -16,7 +16,7 @@
     "lint:fix": "yarn lint --fix"
   },
   "dependencies": {
-    "@stefanprobst/svgo-loader": "^1.0.0",
+    "@stefanprobst/svgo-loader": "^1.0.1",
     "@svgr/plugin-jsx": "^5.4.0",
     "@svgr/webpack": "^5.4.0",
     "url-loader": "^4.1.0"
@@ -45,7 +45,7 @@
     "typescript": "^4.0.3"
   },
   "peerDependencies": {
-    "next": "^9.5.0",
+    "next": "^9.5.0||^10.0.0",
     "react": "^16.10.0||^17.0.0"
   },
   "engines": {
