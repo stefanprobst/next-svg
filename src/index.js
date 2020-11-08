@@ -35,6 +35,17 @@ function componentTemplate(
 }
 
 module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
+  const svgrOptions = pluginOptions.svgr || {}
+  const svgoOptions = pluginOptions.svgo || {}
+  if (Array.isArray(svgoOptions.plugins)) {
+    svgrOptions.svgoConfig = {
+      ...(svgrOptions.svgoConfig || {}),
+      plugins: [
+        ...svgoOptions.plugins,
+        ...(svgrOptions.svgoConfig.plugins || []),
+      ],
+    }
+  }
   return {
     ...nextConfig,
     webpack(config, options) {
@@ -55,16 +66,8 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
               /**
                * when changing this, also update the types in index.d.ts
                */
-              namedExport: 'Svg',
-              /**
-               * by default svgr uses ['jsx', 'svgo'] plugins,
-               * but applies the svgo transformations only to
-               * the generated React component, but not to the
-               * emitted file. we use a separate loader for svgo,
-               * so don't need @svgr/plugin-svgo.
-               */
-              plugins: [require.resolve('@svgr/plugin-jsx')],
-              ...(pluginOptions.svgr || {}),
+              namedExport: pluginOptions.namedExport || 'Svg',
+              ...svgrOptions,
               babel: false,
             },
           },
@@ -95,9 +98,7 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
           },
           {
             loader: '@stefanprobst/svgo-loader',
-            options: {
-              ...(pluginOptions.svgo || {}),
-            },
+            options: svgoOptions,
           },
         ],
       })
