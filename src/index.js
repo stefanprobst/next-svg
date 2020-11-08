@@ -38,12 +38,10 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
   const svgrOptions = pluginOptions.svgr || {}
   const svgoOptions = pluginOptions.svgo || {}
   if (Array.isArray(svgoOptions.plugins)) {
+    const svgrSvgoConfig = svgrOptions.svgoConfig || {}
     svgrOptions.svgoConfig = {
-      ...(svgrOptions.svgoConfig || {}),
-      plugins: [
-        ...svgoOptions.plugins,
-        ...(svgrOptions.svgoConfig.plugins || []),
-      ],
+      ...svgrSvgoConfig,
+      plugins: [...svgoOptions.plugins, ...(svgrSvgoConfig.plugins || [])],
     }
   }
   return {
