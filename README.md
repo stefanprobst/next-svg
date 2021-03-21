@@ -42,7 +42,7 @@ The package uses three loaders in a loader chain:
 [`svgo-loader`](https://github.com/stefanprobst/svgo-loader) to optimize the
 image with [`svgo`](https://github.com/svg/svgo),
 [`url-loader`](https://github.com/webpack-contrib/url-loader) to inline the
-image or emit it to file , and
+image or emit it to file, and
 [`@svgr/webpack`](https://github.com/gregberge/svgr/tree/master/packages/webpack)
 to generate the React component. Each loader can be configured individually:
 
@@ -75,3 +75,18 @@ To make typescript understand `.svg` imports, add the following to
 Note that when changing the `svgr.namedExport` option to something other than
 `Svg`, you will need to provide your own module declaration for `.svg` files.
 Copy `src/index.d.ts` to your project and adjust the named export accordingly.
+
+### Jest
+
+If you want svg images to be transformed when using `jest`, you can reference
+the included jest transformer in your `jest.config.json`:
+
+```json
+// jest.config.json
+{
+  "transform": {
+    "\\.(js|jsx|ts|tsx)$": "babel-jest",
+    "\\.svg$": ["@stefanprobst/next-svg/jest", { "svgo": {}, "svgr": {} }]
+  }
+}
+```
