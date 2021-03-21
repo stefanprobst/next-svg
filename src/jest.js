@@ -1,4 +1,5 @@
 const { process } = require('babel-jest')
+const getOptions = require('./options')
 const processors = require('./processors')
 
 /**
@@ -10,7 +11,7 @@ const processors = require('./processors')
  *   replaceAttrValues?: { [key: string]: any };
  *   svgProps?: { [key: string]: any };
  *   titleProp?: boolean;
- *   svgoConfig?: { plugins?: Array<string> };
+ *   svgoConfig?: { plugins?: Array<string>; multipass?: boolean };
  * }} SvgrOptions
  *
  * @see https://github.com/gregberge/svgr/blob/main/packages/core/src/config.js
@@ -25,9 +26,10 @@ const processors = require('./processors')
 
 /** @type {(userOptions?: SvgOptions ) => import('@jest/transform').Transformer} */
 function createTransformer(userOptions) {
+  const { svgrOptions } = getOptions(userOptions)
   return {
     process(sourceText, sourcePath, config, options) {
-      const jsx = processors.svg(sourceText, userOptions)
+      const jsx = processors.svg(sourceText, svgrOptions)
       const processed = process(jsx, sourcePath, config, options)
       return 'code' in processed ? processed.code : processed
     },

@@ -1,3 +1,5 @@
+const getOptions = require('./options')
+
 /**
  * @typedef {{
  *   namedExport?: string;
@@ -7,7 +9,7 @@
  *   replaceAttrValues?: { [key: string]: any };
  *   svgProps?: { [key: string]: any };
  *   titleProp?: boolean;
- *   svgoConfig?: { plugins?: Array<string> };
+ *   svgoConfig?: { plugins?: Array<string>; multipass?: boolean };
  * }} SvgrOptions
  *
  * @see https://github.com/gregberge/svgr/blob/main/packages/core/src/config.js
@@ -16,7 +18,7 @@
 /**
  * @typedef {{
  *   svgr?: SvgrOptions;
- *   svgo?: { plugins?: Array<string> };
+ *   svgo?: { plugins?: Array<string>; multipass?: boolean };
  *   limit?: number
  * }} PluginOptions
  */
@@ -28,16 +30,7 @@
  */
 function createSvgPlugin(pluginOptions = {}) {
   return function createNextConfig(nextConfig = {}) {
-    const svgrOptions = pluginOptions.svgr || {}
-    const svgoOptions = pluginOptions.svgo || {}
-
-    if (Array.isArray(svgoOptions.plugins)) {
-      const svgrSvgoConfig = svgrOptions.svgoConfig || {}
-      svgrOptions.svgoConfig = {
-        ...svgrSvgoConfig,
-        plugins: [...svgoOptions.plugins, ...(svgrSvgoConfig.plugins || [])],
-      }
-    }
+    const { svgrOptions, svgoOptions } = getOptions(pluginOptions)
 
     return {
       ...nextConfig,
@@ -49,11 +42,7 @@ function createSvgPlugin(pluginOptions = {}) {
             options.defaultLoaders.babel,
             {
               loader: require.resolve('@svgr/webpack'),
-              options: {
-                runtimeConfig: false,
-                ...svgrOptions,
-                babel: false,
-              },
+              options: svgrOptions,
             },
             {
               loader: require.resolve('url-loader'),
