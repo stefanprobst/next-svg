@@ -44,6 +44,10 @@ function createSvgPlugin(pluginOptions = {}) {
               loader: require.resolve('@svgr/webpack'),
               options: svgrOptions,
             },
+            /**
+             * TODO: Use webpack 5 asset modules.
+             * @see https://webpack.js.org/guides/asset-modules/
+             */
             {
               loader: require.resolve('url-loader'),
               options: {
@@ -53,9 +57,9 @@ function createSvgPlugin(pluginOptions = {}) {
                 /**
                  * In server-side compilation phase, `outputPath` defaults to
                  * `.next/server`, but images should be emitted
-                 * to `.next/static/images`.
+                 * to `.next/server/chunks/static/images`.
                  */
-                outputPath: options.isServer ? '../' : undefined,
+                outputPath: options.isServer ? '../../' : undefined,
                 name: 'static/images/[name].[contenthash].[ext]',
                 /**
                  * Don't emit images twice.
