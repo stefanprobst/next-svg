@@ -12,7 +12,7 @@ For Next.js 11 with Webpack 5 use version 2.x, otherwise use version 1.x.
 First, add the loader to the Next.js configuration in `next.config.js`:
 
 ```js
-const withSvg = require("@stefanprobst/next-svg")(/* options */)
+const withSvg = require('@stefanprobst/next-svg')(/* options */)
 
 const nextConfig = {
   /** ... */
@@ -28,8 +28,8 @@ An `.svg` image can then be imported either as a file path to be used in an
 similar to a `create-react-app` setup.
 
 ```tsx
-import Logo from "@/assets/images/logo.svg"
-import { Svg as RocketIcon } from "@/assets/icons/rocket.svg"
+import Logo from '@/assets/images/logo.svg'
+import { Svg as RocketIcon } from '@/assets/icons/rocket.svg'
 
 export default function Page() {
   return (
@@ -53,11 +53,11 @@ image or emit it to file, and
 to generate the React component. Each loader can be configured individually:
 
 ```js
-const createSvgPlugin = require("@stefanprobst/next-svg")
+const createSvgPlugin = require('@stefanprobst/next-svg')
 
 const withSvg = createSvgPlugin({
   svgo: {},
-  svgr: { namedExport: "Svg" },
+  svgr: { namedExport: 'Svg' },
   limit: 8192,
 })
 ```
