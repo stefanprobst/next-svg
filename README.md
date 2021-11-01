@@ -1,88 +1,67 @@
 # next-svg
 
-Adds a Webpack loader for importing `.svg` files as file paths or React
-components to the Next.js config.
+Next.js plugin to optimize svg images with [SVGO v2](https://github.com/svg/svgo). Output can be
+used with `next/image` by default, or as a React component when imported with a `?symbol` resource
+query.
+
+Note: previous versions have used `@svgr/webpack` to generate React components. The current version
+generates a thin wrapping component around a svg
+[`<use>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/use) element.
+
+## How to install
+
+```bash
+yarn add @stefanprobst/next-svg`
+```
 
 ## How to use
 
-Add the loader to the Next.js configuration in `next.config.js`:
+Add the plugin to the Next.js configuration:
 
 ```js
-const withSvg = require('@stefanprobst/next-svg')(/* options */)
+// next.config.mjs
+import createSvgPlugin from '@stefanprobst/next-svg'
 
-module.exports = withSvg(nextConfig)
+/** @type {import('next').NextConfig} */
+const nextConfig = {}
+
+const svgPlugin = createsSvgPlugin({
+  id: '__root__',
+  svgoPlugins: [],
+})
+
+export default createSvgPlugin(nextConfig)
 ```
 
-An `.svg` image can then be imported either as a file path to be used in an
-`<img>` element, or as a React component from a `Svg` named import. This is
-similar to a `create-react-app` setup.
+Import image in a component:
 
-```tsx
-import Logo from '@/assets/images/logo.svg'
-import { Svg as RocketIcon } from '@/assets/icons/rocket.svg'
+```js
+import RocketAsset from '../public/rocket.svg'
+import RocketComponent from '../public/rocket.svg?symbol'
 
-export default function Page() {
+export default function HomePage() {
   return (
-    <h1>
-      <img src={Logo} alt="Logo" />
-      <RocketIcon />
-      Also cool!
-    </h1>
+    <main>
+      <Image src={RocketAsset} alt="Cartoon rocket">
+      <RocketComponent aria-label="Cartoon rocket" />
+    </main>
   )
 }
 ```
 
-## Options
+### Plugin options
 
-The package uses three loaders in a loader chain:
-[`svgo-loader`](https://github.com/stefanprobst/svgo-loader) to optimize the
-image with [`svgo`](https://github.com/svg/svgo),
-[`url-loader`](https://github.com/webpack-contrib/url-loader) to inline the
-image or emit it to file, and
-[`@svgr/webpack`](https://github.com/gregberge/svgr/tree/master/packages/webpack)
-to generate the React component. Each loader can be configured individually:
+- `id`: Added to the image's root `svg` element, so it can be refereced via `<use href="#id">`.
+  (Optional)
+- `svgoPlugins`: Add [svgo plugins](https://github.com/svg/svgo#built-in-plugins). By default, the
+  base svgo preset with `removeViewBox` disabled, and `removeDimensions` and `prefixIds` enabled is
+  added. (Optional)
 
-```js
-const createSvgPlugin = require('@stefanprobst/next-svg')
+### Types
 
-const withSvg = createSvgPlugin({
-  svgo: {},
-  svgr: { namedExport: 'Svg' },
-  limit: 8192,
-})
-```
-
-For `svgo` options, please refer to the
-[SVGO docs](https://github.com/svg/svgo#what-it-can-do). For the `url-loader`
-`limit` option please refer to the
-[`url-loader` docs](https://github.com/webpack-contrib/url-loader#limit). For
-`svgr` options, please refer to the
-[SVGR docs](https://react-svgr.com/docs/options/).
-
-## Typescript
-
-To make typescript understand `.svg` imports, add the following to
-`next-env.d.ts`:
+When using typescript, add the following to `app.d.ts` (or any other `.d.ts` file referenced in
+`tsconfig.json#include`):
 
 ```ts
-/// <reference types="@stefanprobst/next-svg" />
-```
-
-Note that when changing the `svgr.namedExport` option to something other than
-`Svg`, you will need to provide your own module declaration for `.svg` files.
-Copy `src/index.d.ts` to your project and adjust the named export accordingly.
-
-### Jest
-
-If you want svg images to be transformed when using `jest`, you can reference
-the included jest transformer in your `jest.config.json`:
-
-```json
-// jest.config.json
-{
-  "transform": {
-    "\\.(js|jsx|ts|tsx)$": "babel-jest",
-    "\\.svg$": ["@stefanprobst/next-svg/jest", { "svgo": {}, "svgr": {} }]
-  }
-}
+/// <reference types="@stefanprobst/next-svg/types" />
 ```

@@ -1,12 +1,11 @@
-declare module '*.svg' {
-  import type { FC, SVGProps } from 'react'
-  const filePath: string
-  const Component: FC<
-    SVGProps<SVGSVGElement> & {
-      /** requires setting `options.svgr.titleProp: true` */
-      title?: string
-    }
-  >
-  export { Component as Svg }
-  export default filePath
+import type { NextConfig } from 'next'
+import type { OptimizeOptions } from 'svgo'
+
+export interface Options {
+  id?: string
+  svgoPlugins?: OptimizeOptions['plugins']
 }
+
+declare function createPlugin(pluginOptions?: Options): (nextConfig: NextConfig) => NextConfig
+
+export default createPlugin

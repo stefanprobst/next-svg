@@ -1,67 +1,48 @@
 {
   "name": "@stefanprobst/next-svg",
-  "version": "3.0.1",
+  "version": "4.0.0",
   "main": "src/index.js",
-  "types": "src/index.d.ts",
+  "type": "module",
   "repository": "git@github.com:stefanprobst/next-svg.git",
-  "author": "Stefan Probst <stefanprobst@kolabnow.com>",
   "license": "MIT",
   "exports": {
-    ".": "./src/index.js",
-    "./jest": "./src/jest.js"
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js"
+    },
+    "./types": "./src/svg.d.ts"
   },
   "files": [
-    "src",
-    "jest.js"
+    "src"
   ],
   "scripts": {
     "format": "prettier . -l --ignore-path .gitignore",
     "format:fix": "yarn format --write",
-    "lint": "eslint . --ignore-path .gitignore",
-    "lint:fix": "yarn lint --fix"
+    "lint": "eslint . --cache --ignore-path .gitignore",
+    "lint:fix": "yarn lint --fix",
+    "prepare": "simple-git-hooks || true",
+    "validate": "yarn format && yarn lint"
   },
   "dependencies": {
-    "@stefanprobst/svgo-loader": "^1.0.2",
-    "@svgr/core": "^5.5.0",
-    "@svgr/plugin-jsx": "^5.5.0",
-    "@svgr/webpack": "^5.5.0",
-    "url-loader": "^4.1.1"
+    "svgo-loader": "^3.0.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^12.1.4",
-    "@commitlint/config-conventional": "^12.1.4",
-    "@stefanprobst/commitlint-config": "^1.0.1",
-    "@stefanprobst/eslint-config-node": "^1.0.7",
-    "@stefanprobst/prettier-config": "^1.0.3",
-    "@typescript-eslint/eslint-plugin": "^4.27.0",
-    "@typescript-eslint/parser": "^4.27.0",
-    "eslint": "^7.28.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-import-resolver-typescript": "^2.4.0",
-    "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-jest": "^24.3.6",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.4.0",
-    "husky": "^4.3.0",
-    "jest": "^27.0.4",
-    "lint-staged": "^11.0.0",
-    "next": "^12.0.0",
-    "prettier": "^2.3.1",
-    "react": "^17.0.2",
-    "typescript": "^4.3.3"
+    "@commitlint/cli": "^15.0.0",
+    "@stefanprobst/commitlint-config": "^1.0.2",
+    "@stefanprobst/prettier-config": "^2.0.1",
+    "@types/svgo": "^2.6.0",
+    "@types/webpack": "^5.28.0",
+    "eslint": "^8.3.0",
+    "lint-staged": "^12.1.2",
+    "next": "^12.0.4",
+    "prettier": "^2.5.0",
+    "simple-git-hooks": "^2.7.0"
   },
   "peerDependencies": {
-    "babel-jest": "^26.0.0||^27.0.0",
-    "next": "^12.0.0",
-    "react": ">=16.14"
-  },
-  "peerDependenciesMeta": {
-    "babel-jest": {
-      "optional": true
-    }
+    "next": ">=12.0.0"
   },
   "engines": {
-    "node": ">=12.9",
+    "node": ">=14.17",
     "yarn": "1.x"
   },
   "commitlint": {
@@ -70,19 +51,27 @@
     ]
   },
   "eslintConfig": {
+    "root": true,
+    "reportUnusedDisableDirectives": true,
     "extends": [
-      "@stefanprobst/eslint-config-node"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaVersion": 2020
     }
   },
   "lint-staged": {
-    "*.@(js|ts)": "eslint --cache --fix",
+    "*.js": [
+      "eslint --cache --fix",
+      "prettier --write"
+    ],
     "*.@(json|md)": "prettier --write"
   },
-  "prettier": "@stefanprobst/prettier-config"
+  "prettier": "@stefanprobst/prettier-config",
+  "simple-git-hooks": {
+    "commit-msg": "yarn commitlint --edit",
+    "pre-commit": "yarn lint-staged",
+    "pre-push": "yarn run validate"
+  }
 }
