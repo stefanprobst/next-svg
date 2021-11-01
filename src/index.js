@@ -52,7 +52,6 @@ function createSvgPlugin(pluginOptions = {}) {
               loader: require.resolve('url-loader'),
               options: {
                 limit: pluginOptions.limit || 8192,
-                fallback: require.resolve('next/dist/compiled/file-loader'),
                 publicPath: '/_next/',
                 /**
                  * In server-side compilation phase, `outputPath` defaults to
