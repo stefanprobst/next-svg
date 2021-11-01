@@ -3,22 +3,12 @@
 Adds a Webpack loader for importing `.svg` files as file paths or React
 components to the Next.js config.
 
-## What version to use
-
-For Next.js 11 with Webpack 5 use version 2.x, otherwise use version 1.x.
-
 ## How to use
 
-First, add the loader to the Next.js configuration in `next.config.js`:
+Add the loader to the Next.js configuration in `next.config.js`:
 
 ```js
 const withSvg = require('@stefanprobst/next-svg')(/* options */)
-
-const nextConfig = {
-  /** ... */
-  /** For Next.js 11, disabling static image optimisation is currently needed. */
-  images: { disableStaticImages: true },
-}
 
 module.exports = withSvg(nextConfig)
 ```
