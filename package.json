@@ -45,15 +45,15 @@
     "husky": "^4.3.0",
     "jest": "^27.0.4",
     "lint-staged": "^11.0.0",
-    "next": "^11.0.0",
+    "next": "^12.0.0",
     "prettier": "^2.3.1",
     "react": "^17.0.2",
     "typescript": "^4.3.3"
   },
   "peerDependencies": {
     "babel-jest": "^26.0.0||^27.0.0",
-    "next": "^11.0.0",
-    "react": "^16.10.0||^17.0.0"
+    "next": "^12.0.0",
+    "react": ">=16.14"
   },
   "peerDependenciesMeta": {
     "babel-jest": {
