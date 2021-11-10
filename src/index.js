@@ -37,7 +37,7 @@ function createSvgPlugin(pluginOptions = {}) {
       webpack(config, options) {
         config.module.rules.push({
           test: /\.svg$/,
-          issuer: /\.(js|jsx|ts|tsx)$/,
+          issuer: /\.(js|jsx|ts|tsx|mdx)$/,
           use: [
             options.defaultLoaders.babel,
             {
