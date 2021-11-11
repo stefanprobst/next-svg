@@ -55,11 +55,15 @@ function createSvgPlugin(pluginOptions = {}) {
                 publicPath: '/_next/',
                 /**
                  * In server-side compilation phase, `outputPath` defaults to
-                 * `.next/server`, but images should be emitted
-                 * to `.next/server/chunks/static/images`.
+                 * `.next/server/chunks` (production) or `.next/server` (development),
+                 * but images should be emitted to `.next/static/media`.
                  */
-                outputPath: options.isServer ? '../../' : undefined,
-                name: 'static/images/[name].[contenthash].[ext]',
+                outputPath: options.isServer
+                  ? options.dev
+                    ? '../'
+                    : '../../'
+                  : undefined,
+                name: 'static/media/[name].[contenthash].[ext]',
                 /**
                  * Don't emit images twice.
                  *
