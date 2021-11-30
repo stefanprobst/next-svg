@@ -1,4 +1,3 @@
-import type { NextConfig } from 'next'
 import type { OptimizeOptions } from 'svgo'
 
 export interface Options {
@@ -6,6 +5,6 @@ export interface Options {
   svgoPlugins?: OptimizeOptions['plugins']
 }
 
-declare function createPlugin(pluginOptions?: Options): (nextConfig: NextConfig) => NextConfig
+declare function createPlugin(pluginOptions?: Options)
 
 export default createPlugin
