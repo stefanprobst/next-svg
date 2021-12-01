@@ -1,6 +1,6 @@
 {
   "name": "@stefanprobst/next-svg",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "main": "src/index.js",
   "type": "module",
   "repository": "git@github.com:stefanprobst/next-svg.git",
@@ -10,6 +10,7 @@
       "types": "./src/index.d.ts",
       "import": "./src/index.js"
     },
+    "./svg-symbol-loader": "./src/svg-symbol-loader.js",
     "./types": "./src/svg.d.ts"
   },
   "files": [
