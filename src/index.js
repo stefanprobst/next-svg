@@ -8,7 +8,7 @@ export default function createPlugin(pluginOptions = {}) {
   return function createNextConfig(nextConfig = {}) {
     return {
       ...nextConfig,
-      webpackConfig(config, options) {
+      webpack(config, options) {
         const nextImageLoader = config.module.rules.find(
           (rule) => rule.loader === 'next-image-loader',
         )
