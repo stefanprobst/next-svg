@@ -1,6 +1,6 @@
-import loaderUtils from 'next/dist/compiled/loader-utils3'
+const loaderUtils = require('next/dist/compiled/loader-utils3')
 
-export default function loader(content) {
+module.exports = function loader(content) {
   const { isServer, assetPrefix, id } = this.getOptions()
 
   const context = this.rootContext

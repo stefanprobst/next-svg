@@ -1,6 +1,6 @@
 {
   "name": "@stefanprobst/next-svg",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "main": "src/index.js",
   "type": "module",
   "repository": "git@github.com:stefanprobst/next-svg.git",
@@ -10,7 +10,7 @@
       "types": "./src/index.d.ts",
       "import": "./src/index.js"
     },
-    "./svg-symbol-loader": "./src/svg-symbol-loader.js",
+    "./svg-symbol-loader": "./src/svg-symbol-loader.cjs",
     "./types": "./src/svg.d.ts"
   },
   "files": [
@@ -60,6 +60,9 @@
     "parserOptions": {
       "sourceType": "module",
       "ecmaVersion": 2020
+    },
+    "env": {
+      "node": true
     }
   },
   "lint-staged": {

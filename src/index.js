@@ -50,7 +50,7 @@ export default function createPlugin(pluginOptions = {}) {
                   use: [
                     options.defaultLoaders.babel,
                     {
-                      loader: './svg-symbol-loader',
+                      loader: '@stefanprobst/next-svg/svg-symbol-loader',
                       options: { ...nextImageLoader.options, id },
                     },
                   ],
