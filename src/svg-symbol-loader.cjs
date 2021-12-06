@@ -1,7 +1,7 @@
 const loaderUtils = require('next/dist/compiled/loader-utils3')
 
 module.exports = function loader(content) {
-  const { isServer, assetPrefix, id } = this.getOptions()
+  const { isServer, assetPrefix, id, basePath } = this.getOptions()
 
   const context = this.rootContext
   const interpolatedName = loaderUtils.interpolateName(
@@ -14,7 +14,8 @@ module.exports = function loader(content) {
     this.emitFile(interpolatedName, content, null)
   }
 
-  const outputPath = assetPrefix + '/_next' + interpolatedName
+  const prefix = basePath ?? assetPrefix + '/_next'
+  const outputPath = prefix + interpolatedName
 
   return `
   export default function Image(props) {

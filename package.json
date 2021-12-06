@@ -1,6 +1,6 @@
 {
   "name": "@stefanprobst/next-svg",
-  "version": "4.0.5",
+  "version": "4.0.6",
   "main": "src/index.js",
   "type": "module",
   "repository": "git@github.com:stefanprobst/next-svg.git",
