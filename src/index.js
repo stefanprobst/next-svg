@@ -9,6 +9,9 @@ export default function createPlugin(pluginOptions = {}) {
     return {
       ...nextConfig,
       webpack(config, options) {
+        const { isServer } = options
+        const { assetPrefix } = options.config
+
         const nextImageLoader = config.module.rules.find(
           (rule) => rule.loader === 'next-image-loader',
         )
@@ -38,28 +41,33 @@ export default function createPlugin(pluginOptions = {}) {
           },
         }
 
+        const svgSymbolLoader = {
+          resourceQuery: /symbol/,
+          use: [
+            options.defaultLoaders.babel,
+            {
+              loader: '@stefanprobst/next-svg/svg-symbol-loader',
+              options: { isServer, assetPrefix, id },
+            },
+          ],
+        }
+
+        const oneOf = [svgSymbolLoader]
+
+        if (nextImageLoader != null) {
+          oneOf.push({
+            loader: nextImageLoader.loader,
+            options: nextImageLoader.options,
+          })
+        }
+
         config.module.rules.push({
           test: /\.svg$/,
-          dependency: nextImageLoader.dependency,
-          issuer: nextImageLoader.issuer,
+          dependency: nextImageLoader?.dependency ?? { not: ['url'] },
+          issuer: nextImageLoader?.issuer ?? { not: /\.(css|scss|sass)$/ },
           rules: [
             {
-              oneOf: [
-                {
-                  resourceQuery: /symbol/,
-                  use: [
-                    options.defaultLoaders.babel,
-                    {
-                      loader: '@stefanprobst/next-svg/svg-symbol-loader',
-                      options: { ...nextImageLoader.options, id },
-                    },
-                  ],
-                },
-                {
-                  loader: nextImageLoader.loader,
-                  options: nextImageLoader.options,
-                },
-              ],
+              oneOf,
             },
             svgoLoader,
           ],
