@@ -1,7 +1,7 @@
 declare module '*.svg?symbol' {
-  import type { VFC, SVGProps } from 'react'
+  import type { ReactNode, SVGProps, VFC } from 'react'
 
-  const Image: VFC<SVGProps<SVGSVGElement>>
+  const Image: VFC<SVGProps<SVGSVGElement> & { title?: ReactNode }>
 
   export default Image
 }

@@ -18,10 +18,11 @@ module.exports = function loader(content) {
   const outputPath = prefix + interpolatedName
 
   return `
-  export default function Image(props) {
+  export default function Image({ title, ...props }) {
     return (
-      <svg {...props}>
-        <use href="${outputPath}#${id}" />
+      <svg role="img" focusable={false} {...props}>
+        {title != null ? <title>{title}</title> : null}
+        <use href="${outputPath}#${id}" aria-hidden />
       </svg>
     )
   }`
