@@ -20,7 +20,7 @@ module.exports = function loader(content) {
   return `
   export default function Image({ title, ...props }) {
     return (
-      <svg role="img" focusable={false} {...props}>
+      <svg role="img" focusable={false} data-symbol {...props}>
         {title != null ? <title>{title}</title> : null}
         <use href="${outputPath}#${id}" aria-hidden />
       </svg>
