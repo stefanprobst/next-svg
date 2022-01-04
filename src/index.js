@@ -29,6 +29,7 @@ export default function createPlugin(pluginOptions = {}) {
                 },
               },
               'prefixIds',
+              'convertStyleToAttrs',
               'removeDimensions',
               ...svgoPlugins,
               {
