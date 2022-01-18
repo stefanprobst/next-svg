@@ -42,18 +42,55 @@ export default function createPlugin(pluginOptions = {}) {
           },
         }
 
+        const svgSymbolLoaderOptions = { isServer, assetPrefix, id }
+
         const svgSymbolLoader = {
           resourceQuery: /symbol/,
           use: [
             options.defaultLoaders.babel,
             {
               loader: '@stefanprobst/next-svg/svg-symbol-loader',
-              options: { isServer, assetPrefix, id },
+              options: svgSymbolLoaderOptions,
             },
           ],
         }
 
-        const oneOf = [svgSymbolLoader]
+        const svgSymbolIconLoader = {
+          resourceQuery: /symbol-icon/,
+          use: [
+            options.defaultLoaders.babel,
+            {
+              loader: '@stefanprobst/next-svg/svg-symbol-loader',
+              options: { ...svgSymbolLoaderOptions, icon: true },
+            },
+          ],
+        }
+
+        const svgInlineLoaderOptions = {}
+
+        const svgInlineLoader = {
+          resourceQuery: /inline/,
+          use: [
+            options.defaultLoaders.babel,
+            {
+              loader: '@stefanprobst/next-svg/svg-inline-loader',
+              options: svgInlineLoaderOptions,
+            },
+          ],
+        }
+
+        const svgInlineIconLoader = {
+          resourceQuery: /inline-icon/,
+          use: [
+            options.defaultLoaders.babel,
+            {
+              loader: '@stefanprobst/next-svg/svg-inline-loader',
+              options: { ...svgInlineLoaderOptions, icon: true },
+            },
+          ],
+        }
+
+        const oneOf = [svgSymbolIconLoader, svgSymbolLoader, svgInlineIconLoader, svgInlineLoader]
 
         if (nextImageLoader != null) {
           oneOf.push({

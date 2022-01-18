@@ -1,6 +1,6 @@
 {
   "name": "@stefanprobst/next-svg",
-  "version": "4.1.0",
+  "version": "4.2.0-canary.2",
   "main": "src/index.js",
   "type": "module",
   "repository": "git@github.com:stefanprobst/next-svg.git",
@@ -11,6 +11,7 @@
       "import": "./src/index.js"
     },
     "./svg-symbol-loader": "./src/svg-symbol-loader.cjs",
+    "./svg-inline-loader": "./src/svg-inline-loader.cjs",
     "./types": "./src/svg.d.ts"
   },
   "files": [
@@ -25,6 +26,10 @@
     "validate": "yarn format && yarn lint"
   },
   "dependencies": {
+    "hast-util-from-parse5": "^6.0.1",
+    "hast-util-to-estree": "^1.4.0",
+    "parse5": "^6.0.1",
+    "recast": "^0.20.5",
     "svgo-loader": "^3.0.0"
   },
   "devDependencies": {
