@@ -1,11 +1,9 @@
 # next-svg
 
 Next.js plugin to optimize svg images with [SVGO v2](https://github.com/svg/svgo). Output can be
-used with `next/image` by default, or as a React component when imported with a `?symbol` resource
-query.
+used with `next/image` by default, or as a React component when imported with a resource query.
 
-Note: previous versions have used `@svgr/webpack` to generate React components. The current version
-generates a thin wrapping component around a svg
+The current version generates a thin wrapping component around a svg
 [`<use>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/use) element.
 
 ## How to install
@@ -25,37 +23,79 @@ import createSvgPlugin from '@stefanprobst/next-svg'
 /** @type {import('next').NextConfig} */
 const nextConfig = {}
 
-const svgPlugin = createsSvgPlugin({
-  id: '__root__',
-  svgoPlugins: [],
+const withSvg = createSvgPlugin({
+  // id: '__root__',
+  // svgoPlugins: [],
 })
 
-export default createSvgPlugin(nextConfig)
+export default withSvg(nextConfig)
 ```
 
-Import image in a component:
+There are three options for importing an svg image:
+
+### Use with `next/image`
+
+By default, the svg image will be imported for use with `next/image`. This is also the default
+`next` behavior.
 
 ```js
+import Image from 'next/image'
 import RocketAsset from '../public/rocket.svg'
-import RocketComponent from '../public/rocket.svg?symbol'
 
 export default function HomePage() {
   return (
     <main>
-      <Image src={RocketAsset} alt="Cartoon rocket">
+      <Image src={RocketAsset} alt="Cartoon rocket" />
+    </main>
+  )
+}
+```
+
+### Use as a React component with inlined svg
+
+When used with a `?inline` resource query, the import returns a React component which inlines the
+svg as jsx. This is similar to what `svgr` does.
+
+```js
+import RocketComponent from '../public/rocket.svg?inline'
+
+export default function HomePage() {
+  return (
+    <main>
       <RocketComponent aria-label="Cartoon rocket" />
     </main>
   )
 }
 ```
 
+Alternatively, the `?inline-icon` resource query will add a default width and height of `1em`.
+
+### Use as a React component with `<use>`
+
+When used with a `?symbol` resource query, the import returns a React component which references the
+svg image via `<use>`.
+
+```js
+import RocketComponent from '../public/rocket.svg?symbol'
+
+export default function HomePage() {
+  return (
+    <main>
+      <RocketComponent aria-label="Cartoon rocket" />
+    </main>
+  )
+}
+```
+
+Alternatively, the `?symbol-icon` resource query will add a default width and height of `1em`.
+
 ### Plugin options
 
 - `id`: Added to the image's root `svg` element, so it can be refereced via `<use href="#id">`.
   (Optional)
 - `svgoPlugins`: Add [svgo plugins](https://github.com/svg/svgo#built-in-plugins). By default, the
-  base svgo preset with `removeViewBox` disabled, and `removeDimensions` and `prefixIds` enabled is
-  added. (Optional)
+  base svgo preset with `removeViewBox` disabled, and `removeDimensions`, `convertStyleToAttrs` and
+  `prefixIds` enabled is added. (Optional)
 
 ### Types
 

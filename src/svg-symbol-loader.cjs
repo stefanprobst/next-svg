@@ -1,7 +1,7 @@
 const loaderUtils = require('next/dist/compiled/loader-utils3')
 
 module.exports = function loader(content) {
-  const { isServer, assetPrefix, id, basePath } = this.getOptions()
+  const { isServer, assetPrefix, id, basePath, icon } = this.getOptions()
 
   const context = this.rootContext
   const interpolatedName = loaderUtils.interpolateName(
@@ -20,7 +20,9 @@ module.exports = function loader(content) {
   return `
   export default function Image({ title, ...props }) {
     return (
-      <svg role="img" focusable={false} data-symbol {...props}>
+      <svg role="img" focusable={false} data-symbol ${
+        icon === true ? 'width="1em" height="1em"' : ''
+      } {...props}>
         {title != null ? <title>{title}</title> : null}
         <use href="${outputPath}#${id}" aria-hidden />
       </svg>
