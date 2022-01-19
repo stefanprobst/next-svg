@@ -1,6 +1,6 @@
 {
   "name": "@stefanprobst/next-svg",
-  "version": "4.2.0-canary.2",
+  "version": "4.2.0-canary.4",
   "main": "src/index.js",
   "type": "module",
   "repository": "git@github.com:stefanprobst/next-svg.git",
@@ -26,8 +26,8 @@
     "validate": "yarn format && yarn lint"
   },
   "dependencies": {
-    "hast-util-from-parse5": "^6.0.1",
-    "hast-util-to-estree": "^1.4.0",
+    "hast-util-from-parse5": "^7.1.0",
+    "hast-util-to-estree": "^2.0.2",
     "parse5": "^6.0.1",
     "recast": "^0.20.5",
     "svgo-loader": "^3.0.0"
