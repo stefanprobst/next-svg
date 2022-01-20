@@ -25,6 +25,9 @@ export default function createPlugin(pluginOptions = {}) {
                 params: {
                   overrides: {
                     removeViewBox: false,
+                    inlineStyles: {
+                      onlyMatchedOnce: false,
+                    },
                   },
                 },
               },
